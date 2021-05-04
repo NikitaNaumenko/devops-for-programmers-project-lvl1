@@ -2,6 +2,8 @@ TAG := latest
 server:
 	npx nodos server
 
+setup:
+	npm install
 test:
 	npm -s test
 
