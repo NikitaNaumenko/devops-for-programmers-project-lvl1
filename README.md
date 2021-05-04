@@ -1,0 +1,1 @@
+[![push](https://github.com/NikitaNaumenko/devops-for-programmers-project-lvl1/actions/workflows/push.yml/badge.svg)](https://github.com/NikitaNaumenko/devops-for-programmers-project-lvl1/actions/workflows/push.yml)
