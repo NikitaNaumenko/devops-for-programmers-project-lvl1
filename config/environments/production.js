@@ -7,6 +7,6 @@ export default async (app) => {
 
   app.config.db = {
     type: 'postgres',
-    database: 'hexlet-devops_production',
+    database: 'devops-for-programmers-project-lvl1_production',
   };
 };
