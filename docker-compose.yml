@@ -1,22 +1,14 @@
 version: "3.9"
 services:
-  db:
-    image: postgres:12-alpine
-    environment:
-      POSTGRES_HOST_AUTH_METHOD: trust
-    volumes:
-      - db:/var/lib/postgresql/data
-
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile.production
-    command: 'make test'
-    ports:
-      - '8080:8080'
+    build: .
     volumes:
       - ./:/app
     depends_on:
       - db
-volumes:
+
   db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
