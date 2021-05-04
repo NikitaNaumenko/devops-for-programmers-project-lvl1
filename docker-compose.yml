@@ -1,5 +1,12 @@
 version: "3.9"
 services:
+  db:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   app:
     build:
       context: .
@@ -7,3 +14,5 @@ services:
     command: 'make test'
     volumes:
       - ./:/app
+    depends_on:
+      - db
