@@ -8,4 +8,5 @@ services:
       - db
 
   db:
+    env_file: ./.env.ci
     image: postgres:11

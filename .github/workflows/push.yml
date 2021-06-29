@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
 jobs:
-  verify:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,8 +18,9 @@ jobs:
         run: make setup
       - name: Test
         run: make test
-  docker:
+  build:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
