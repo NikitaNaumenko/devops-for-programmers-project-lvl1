@@ -1,9 +1,15 @@
 TAG := latest
+prepare:
+	cp -n .env.example .env || true
+install:
+	npm install
+
+
 server:
 	npx nodos server
 
-setup:
-	npm install
+setup: prepare install
+
 test:
 	npm -s test
 

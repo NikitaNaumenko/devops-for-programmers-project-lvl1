@@ -8,7 +8,4 @@ services:
       - db
 
   db:
-    image: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+    image: postgres:11
