@@ -49,21 +49,23 @@ jobs:
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
   test:
     runs-on: ubuntu-latest
-    - name: Pull image
-      run: docker-compose pull --ignore-pull-failures
-    - name: Prepare
-      run: make prepare
-    - name: Test
-      run: make ci-test
+    steps:
+      - name: Pull image
+        run: docker-compose pull --ignore-pull-failures
+      - name: Prepare
+        run: make prepare
+      - name: Test
+        run: make ci-test
   push:
     runs-on: ubuntu-latest
-    - name: Push
-      id: docker_push
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./Dockerfile.production
-        push: true
-        tags: naumenkonikita/devops-for-programmers-project-lvl1:latest
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
+    steps:
+      - name: Push
+        id: docker_push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile.production
+          push: true
+          tags: naumenkonikita/devops-for-programmers-project-lvl1:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
