@@ -70,6 +70,7 @@ jobs:
   #       run: make ci-test
   push:
     # needs: test
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Push
