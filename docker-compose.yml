@@ -1,12 +1,14 @@
 version: "3.9"
 services:
   app:
-    build: .
-    volumes:
-      - ./:/app
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    command: make test
+    env_file: ./.env
     depends_on:
       - db
 
   db:
-    env_file: ./.env.ci
+    env_file: ./.env
     image: postgres:11

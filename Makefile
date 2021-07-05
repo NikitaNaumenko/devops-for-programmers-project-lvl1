@@ -13,6 +13,9 @@ setup: prepare install
 test:
 	npm -s test
 
+ci-test: prepare
+	docker-compose --file docker-compose.yml up --abort-on-container-exit
+
 docker-build:
 	docker build . -f Dockerfile.production -t 'naumenkonikita/devops-for-programmers-project-lvl1:${TAG}'
 
