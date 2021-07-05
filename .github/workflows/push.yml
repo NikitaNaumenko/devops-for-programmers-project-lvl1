@@ -48,6 +48,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
   test:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Pull image
@@ -57,6 +58,7 @@ jobs:
       - name: Test
         run: make ci-test
   push:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Push
