@@ -51,8 +51,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Pull image
-        run: docker-compose pull --ignore-pull-failures
+      # - name: Pull image
+      #   run: docker-compose pull --ignore-pull-failures
       - name: Prepare
         run: make prepare
       - name: Test
