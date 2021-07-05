@@ -51,10 +51,10 @@ jobs:
           tags: naumenkonikita/devops-for-programmers-project-lvl1:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
-      - name: Pull image
-        run: docker-compose pull --ignore-pull-failures
       - name: Prepare
         run: make prepare
+      - name: Pull image
+        run: docker-compose pull --ignore-pull-failures
       - name: Test
         run: make ci-test
 
