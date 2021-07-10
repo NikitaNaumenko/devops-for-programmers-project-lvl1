@@ -6,7 +6,7 @@ prepare:
 install:
 	npm install
 
-server: prepare
+server:
 	npx nodos server
 
 setup: prepare install

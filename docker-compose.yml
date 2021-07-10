@@ -5,10 +5,10 @@ services:
       context: .
       dockerfile: Dockerfile.production
     command: make test
-    env_file: ./.env
+    env_file: ./.env.example
     depends_on:
       - db
 
   db:
-    env_file: ./.env
+    env_file: ./.env.example
     image: postgres:11
