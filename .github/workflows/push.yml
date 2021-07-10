@@ -1,45 +1,44 @@
 name: push
 
+DEFAULTS: &DEFAULTS
+  - name: Checkout
+    uses: actions/checkout@v2
+
+  - name: Set up Docker Buildx
+    uses: docker/setup-buildx-action@v1
+
+  - name: Cache Docker layers
+    uses: actions/cache@v2
+    with:
+      path: /tmp/.buildx-cache
+      key: ${{ runner.os }}-buildx-${{ github.sha }}
+      restore-keys: |
+        ${{ runner.os }}-buildx-
+
 on:
   push:
     branches:
       - main
   pull_request:
+
 jobs:
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-      # - uses: actions/checkout@v2
-      # - name: Use Node.js
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: '14.x'
-      # - name: Setup
-      #   run: make setup
-      # - name: Test
-      #   run: make test
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      <<: &DEFAULTS
+      # - name: Checkout
+      #   uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
 
-      # - name: Login to DockerHub
-      #   uses: docker/login-action@v1
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v2
       #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-buildx-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-buildx-
 
       - name: Build
         id: docker_build
@@ -53,19 +52,22 @@ jobs:
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
   test:
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
+      <<: &DEFAULTS
+      # - name: Checkout
+      #   uses: actions/checkout@v2
+
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-buildx-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-buildx-
 
       - name: Prepare
         run: make prepare
@@ -78,26 +80,28 @@ jobs:
 
   push:
     runs-on: ubuntu-latest
+    needs: test
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      <<: &DEFAULTS
+      # - name: Checkout
+      #   uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      # - name: Login to DockerHub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-buildx-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-buildx-
 
 
       - name: Push
@@ -110,28 +114,3 @@ jobs:
           tags: naumenkonikita/devops-for-programmers-project-lvl1:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
-  # test:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Pull image
-  #       run: docker-compose pull --ignore-pull-failures
-  #     - name: Prepare
-  #       run: make prepare
-  #     - name: Test
-  #       run: make ci-test
-  # push:
-  #   # needs: test
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Push
-  #       id: docker_push
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: .
-  #         file: ./Dockerfile.production
-  #         push: true
-  #         tags: naumenkonikita/devops-for-programmers-project-lvl1:latest
-  #         cache-from: type=local,src=/tmp/.buildx-cache
-  #         cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
