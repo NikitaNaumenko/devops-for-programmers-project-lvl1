@@ -5,10 +5,19 @@ services:
       context: .
       dockerfile: Dockerfile.production
     command: make test
-    env_file: ./.env.example
+    environment:
+      - NODOS_HOST='0.0.0.0'
+      - NODOS_PORT=8080
+      - NODOS_DB_TYPE=postgres
+      - NODOS_DB_HOSTNAME=db
+      - NODOS_DB_USERNAME=postgres
+      - NODOS_DB_PASSWORD=postgres
     depends_on:
       - db
 
   db:
-    env_file: ./.env.example
     image: postgres:11
+    environment:
+      - POSTGRES_DB=hexlet
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

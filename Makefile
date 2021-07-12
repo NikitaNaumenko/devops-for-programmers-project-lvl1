@@ -1,7 +1,7 @@
 TAG := latest
 
 prepare:
-	cp -n .env.example .env || true
+	cp -n .env.example .env
 
 install:
 	npm install

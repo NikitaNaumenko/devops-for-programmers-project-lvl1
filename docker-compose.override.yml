@@ -2,12 +2,15 @@ version: "3.9"
 
 services:
   app:
+    image: devops-project-app
+    container_name: devops-project-app
     build: .
     volumes:
       - ./:/app
     ports:
       - "8080:8080"
     command: npm start
+    env_file: ./.env
 
   caddy:
     image: caddy:alpine
@@ -18,3 +21,6 @@ services:
       - "443:443"
     depends_on:
       - app
+  db:
+    image: postgres:11
+    env_file: './env'
