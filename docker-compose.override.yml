@@ -23,4 +23,4 @@ services:
       - app
   db:
     image: postgres:11
-    env_file: './env'
+    env_file: './.env'

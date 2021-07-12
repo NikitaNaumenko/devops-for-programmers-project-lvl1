@@ -1,6 +1,8 @@
 version: "3.9"
 services:
   app:
+    image: devops-project-app
+    container_name: devops-project-app
     build:
       context: .
       dockerfile: Dockerfile.production
