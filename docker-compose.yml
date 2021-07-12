@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile.production
     command: make test
-    env_file: ./.env
+    env_file: ./.env.example
     depends_on:
       - db
 
