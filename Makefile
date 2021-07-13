@@ -4,12 +4,15 @@ prepare:
 	cp -n .env.example .env
 
 install:
-	npm install
+	docker-compose run app npm install
 
 server:
 	npx nodos server
 
 setup: prepare install
+
+compose:
+	docker-compose up
 
 test: prepare
 	npm -s test

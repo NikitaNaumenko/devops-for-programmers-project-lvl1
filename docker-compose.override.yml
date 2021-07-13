@@ -2,13 +2,12 @@ version: "3.9"
 
 services:
   app:
-    image: devops-project-app
     container_name: devops-project-app
     build: .
     volumes:
       - ./:/app
     ports:
-      - "0.0.0.0:8080:8080"
+      - "8080:8080"
     command: npm start
 
   caddy:
@@ -16,7 +15,7 @@ services:
     volumes:
       - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile
     ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
+      - "80:80"
+      - "443:443"
     depends_on:
       - app
