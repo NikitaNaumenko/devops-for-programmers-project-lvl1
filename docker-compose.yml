@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   app:
-    image: devops-project-app
+    image: naumenkonikita/devops-for-programmers-project-lvl1
     container_name: devops-project-app
     build:
       context: .
